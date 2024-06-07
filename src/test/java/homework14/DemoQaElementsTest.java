@@ -1,4 +1,4 @@
-package homework14.homework.com;
+package homework14;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
+import static com.demoqa.ConfigFileReader.getBaseUrl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HomeDemoQaTest {
@@ -97,7 +98,7 @@ public class HomeDemoQaTest {
     @BeforeEach
     void setup() {
         driver = new ChromeDriver();
-        driver.get("https://demoqa.com/");
+        driver.get(getBaseUrl());
     }
 
     @AfterEach

@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-import static com.demoqa.ConfigFileReader.getBaseUrl;
+import static com.demoqa.StaticConfigFileReader.getBaseUrl;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HomeDemoQaTest {

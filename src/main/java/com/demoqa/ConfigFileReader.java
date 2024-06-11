@@ -7,28 +7,43 @@ import java.util.Properties;
 
 public class ConfigFileReader {
 
-    private static String propertyFilePass;
-    private static Properties properties;
+    private static final String PROPERTY_FILE_PATH = "src/main/resources/application.properties";
 
-    static {
-        propertyFilePass = "src/main/resources/application.properties";
+    private static volatile ConfigFileReader instance;
+
+    private Properties properties;
+
+    private ConfigFileReader() {
         properties = new Properties();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(propertyFilePass))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(PROPERTY_FILE_PATH))) {
             properties.load(reader);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static String getProperty(String propertyKey) {
-        var propertyValue = properties.getProperty(propertyKey);
-        if(propertyValue != null)
-            return propertyValue;
-        throw new RuntimeException(propertyKey + " is not specified");
+    public static ConfigFileReader getConfigFileReader() {
+        ConfigFileReader result = instance;
+        if (result != null) {
+            return result;
+        }
+        synchronized(ConfigFileReader.class) {
+            if (instance == null) {
+                instance = new ConfigFileReader();
+            }
+            return instance;
+        }
     }
 
-    public static String getBaseUrl() {
+    private String getProperty(String propertyKey) {
+        var propertyValue = properties.getProperty(propertyKey);
+        if (propertyValue != null) {
+            return propertyValue;
+        }
+        throw new RuntimeException(propertyKey + " is not found");
+    }
+
+    public String getBaseUrl() {
         return getProperty("base.url");
     }
 }

@@ -1,6 +1,6 @@
 package homework16;
 
-import com.demoqa.NonStaticConfigFileReader;
+import com.demoqa.ConfigFileReader;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,7 +61,7 @@ public class HomeDemoQaTest {
     @BeforeEach
     void setup() {
         driver = new ChromeDriver();
-        var configFileReader = new NonStaticConfigFileReader();
+        var configFileReader = new ConfigFileReader();
         driver.get(configFileReader.getBaseUrl());
     }
 

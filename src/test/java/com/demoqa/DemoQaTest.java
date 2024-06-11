@@ -1,25 +1,18 @@
 package com.demoqa;
 
-import org.junit.jupiter.api.AfterEach;
+import com.demoqa.pagess.ButtonsPage;
+import com.demoqa.pagess.MainPage;
+import com.demoqa.pagess.SideMenuBar;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class DemoQaTest {
+public class DemoQaTest extends BaseTest {
 
-    private static final By ELEMENTS_CARD = By.xpath("//div[@class='card-body']/h5[text()='Elements']");
-    private static final By BUTTONS_MENU_ITEM = By.id("item-4");
-    private static final By TEXT_BOX_MENU_ITEM = By.id("item-0");
-    private static final By CLICK_ME_BUTTON = By.xpath("//button[text()='Click Me']");
-    private static final By MESSAGE = By.id("dynamicClickMessage");
     private static final By TEXT_BOX_TITLE = By.className("text-center");
     private static final String EXPECTED_MESSAGE = "You have done a dynamic click";
     private static final By FULL_NAME_FIELD = By.id("userName");
@@ -32,31 +25,35 @@ public class DemoQaTest {
     private static final String EMAIL = "charile@gmail.com";
     private static final String ADDRESS = "New York, 45 Avenue";
 
-    WebDriver driver;
+    MainPage mainPage;
+    SideMenuBar sideMenuBar;
+    ButtonsPage buttonsPage;
+
+    @BeforeEach
+    void precondition() {
+        driver.get(appProperties.getBaseUrl());
+        mainPage = new MainPage(driver);
+        sideMenuBar = new SideMenuBar(driver);
+        buttonsPage = new ButtonsPage(driver);
+    }
 
     @Test
     void testButtonClick() {
-        WebElement elementsCard = driver.findElement(ELEMENTS_CARD);
-        elementsCard.click();
+        mainPage.clickElementsCard();
 
-        WebElement buttonsMenuItem = driver.findElement(BUTTONS_MENU_ITEM);
-        buttonsMenuItem.click();
+        sideMenuBar.clickButtonsMenuItem();
 
-        WebElement clickMeButton = driver.findElement(CLICK_ME_BUTTON);
-        clickMeButton.click();
+        buttonsPage.clickOnClickMeButton();
 
-        WebElement message = driver.findElement(MESSAGE);
-        String actualMessage = message.getText();
+        String actualMessage = buttonsPage.getAfterClickMessage();
         assertEquals(EXPECTED_MESSAGE, actualMessage);
     }
 
     @Test
     void testTextBox() {
-        WebElement elementsCard = driver.findElement(ELEMENTS_CARD);
-        elementsCard.click();
+        mainPage.clickElementsCard();
 
-        WebElement buttonsMenuItem = driver.findElement(TEXT_BOX_MENU_ITEM);
-        buttonsMenuItem.click();
+        sideMenuBar.clickTextBoxMenuItem();
 
         WebElement textBoxTitle = driver.findElement(TEXT_BOX_TITLE);
         String actualText = textBoxTitle.getText();
@@ -80,17 +77,5 @@ public class DemoQaTest {
         WebElement submittedName = driver.findElement(SUBMITTED_NAME);
         String actualSubmittedNameValue = submittedName.getText();
         assertTrue(actualSubmittedNameValue.contains(FULL_NAME));
-    }
-
-    @BeforeEach
-    void setup() {
-        driver = new ChromeDriver();
-        driver.get("https://demoqa.com/");
-        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
-    }
-
-    @AfterEach
-    void cleanup() {
-        driver.quit();
     }
 }

@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import java.time.Duration;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -147,7 +148,7 @@ public class DemoQaElementsTest {
 
     @BeforeEach
     void setup() {
-        driver = new ChromeDriver();
+        driver = new FirefoxDriver();
         driver.get("https://demoqa.com/");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));

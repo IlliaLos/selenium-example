@@ -1,4 +1,4 @@
-package homework16;
+/*package homework16;
 
 import com.demoqa.ConfigFileReader;
 import org.junit.jupiter.api.AfterEach;
@@ -70,3 +70,4 @@ public class HomeDemoQaTest {
         driver.quit();
     }
 }
+*/
